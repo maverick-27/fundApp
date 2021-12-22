@@ -3,7 +3,7 @@
 # To Run  
   We need pip
    
-   After That run
+   Once installed run these two commands
    
-   pip install flask, flask_sqlalchemy
-   flask run
+   # pip install flask, flask_sqlalchemy
+   # flask run
