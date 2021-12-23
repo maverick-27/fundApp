@@ -1,6 +1,83 @@
-<form action='' method = "POST">
-  <p>name <input type = "text" name = "name" value="{{fund.name}}"/></p>
-  <p>source <input type = "text" name = "source"  value="{{fund.source}}"/></p>
-  <p>effective_date <input type = "text" name = "effective_date" value="{{fund.effective_date}}"/></p>
-  <p><input type = "submit" value = "Submit" /></p>
-</form>
+<html>
+<head>
+    <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<div class="container">
+    <form action="" method="POST">
+        <h2>Edit Fund</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="fund_id">Fund Id</label>
+                    <input
+                            type="integer"
+                            class="form-control"
+                            name="fund_id"
+                            placeholder=""
+                            readonly
+                            value="{{fund.fund_id}}"
+                            id="fund_id"
+                    />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            name="name"
+                            placeholder=""
+                            value="{{fund.name}}"
+                            id="name"
+                    />
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="source">Source</label>
+                    <select class="form-control" name="source" id="source" >
+                        <option disabled="disabled" selected="selected" style="display:none;">{{fund.source}}</option>
+                        <option value="ivar">Ivar</option>
+                        <option value="Legacy">Legacy</option>
+                    </select>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="effective_date">Effective Date</label>
+                    <input
+                            type="date"
+                            class="form-control"
+                            name="effective_date"
+                            id="effective_date"
+                            value="{{fund.effective_date}}"
+                            placeholder=""
+                    />
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" value="Submit">
+            Submit
+        </button>
+    </form>
+</div>
+</html>

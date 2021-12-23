@@ -1,7 +1,81 @@
-<form action='' method = "POST">
-  <p>Fund Id <input type = "integer" name = "fund_id" /></p>
-  <p>Name <input type = "text" name = "name" /></p>
-  <p>Source <input type = "integer" name = "source" /></p>
-  <p>Effective Date <input type = "text" name = "effective_date" /></p>
-  <p><input type = "submit" value = "Submit" /></p>
-</form>
+<html>
+<head>
+
+    <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<div class="container">
+    <form action="" method="POST">
+        <h2>Add Fund</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="fund_id">Fund Id</label>
+                    <input
+                            type="integer"
+                            class="form-control"
+                            name="fund_id"
+                            placeholder=""
+                            id="fund_id"
+                    />
+                </div>
+            </div>
+        </div>
+        <!--  col-md-6   -->
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            name="name"
+                            placeholder=""
+                            id="name"
+                    />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="source">Source</label>
+                    <select id="source" name="source" class="form-control">
+                        <option value="ivar">Ivar</option>
+                        <option value="Legacy">Legacy</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="effective_date">Effective Date</label>
+                    <input
+                            type="date"
+                            class="form-control"
+                            name="effective_date"
+                            id="effective_date"
+                            placeholder="effective_date"
+                    />
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" value="Submit">
+            Submit
+        </button>
+    </form>
+</div>
+</html>

@@ -1,8 +1,84 @@
-<h3>Id</h3>
-<p>{{fund.fund_id}}</p><hr>
-<h3>Name</h3>
-<p>{{fund.name}}</p><hr>
-<h3>Source</h3>
-<p>{{fund.source}}</p><hr>
-<h3>Effective Date</h3>
-<p>{{fund.effective_date}}</p><hr>
+<html>
+<head>
+    <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<div class="container">
+    <form action="" method="POST">
+        <h2>View Fund Details</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="fund_id">Fund Id</label>
+                    <input
+                            type="integer"
+                            class="form-control"
+                            name="fund_id"
+                            placeholder=""
+                            readonly
+                            value="{{fund.fund_id}}"
+                            id="fund_id"
+                    />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            name="name"
+                            placeholder=""
+                            readonly
+                            value="{{fund.name}}"
+                            id="name"
+                    />
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="source">Source</label>
+                    <select id="source" name="source" readonly value={{fund.source}} class="form-control">
+
+                        <option readonly value="1st">1st</option>
+                        <option readonly value="2nd Data">2nd Data</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="effective_date">Effective Date</label>
+                    <input
+                            type="date"
+                            readonly
+                            class="form-control"
+                            name="effective_date"
+                            id="effective_date"
+                            value="{{fund.effective_date}}"
+                            placeholder=""
+                    />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</html>
