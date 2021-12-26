@@ -25,7 +25,9 @@ def create():
         name = request.form['name']
         source = request.form['source']
         effective_date = request.form['effective_date']
-        fund = FundModel(fund_id=fund_id, name=name, source=source, effective_date=effective_date)
+        future_effective_date = request.form['future_effective_date']
+        fund = FundModel(fund_id=fund_id, name=name, source=source, effective_date=effective_date,
+                         future_effective_date=future_effective_date)
         db.session.add(fund)
         db.session.commit()
         return redirect('/')
@@ -55,7 +57,9 @@ def update(id):
             name = request.form['name']
             source = request.form['source']
             effective_date = request.form['effective_date']
-            fund = FundModel(fund_id=id, name=name, source=source, effective_date=effective_date)
+            future_effective_date = request.form['future_effective_date']
+            fund = FundModel(fund_id=id, name=name, source=source, effective_date=effective_date,
+                             future_effective_date=future_effective_date)
             db.session.add(fund)
             db.session.commit()
             return redirect(f'/')

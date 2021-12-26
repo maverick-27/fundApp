@@ -53,10 +53,9 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="source">Source</label>
-                    <select id="source" name="source" readonly value={{fund.source}} class="form-control">
-
-                        <option readonly value="1st">1st</option>
-                        <option readonly value="2nd Data">2nd Data</option>
+                    <select class="form-control" disabled name="source" id="source">
+                        <option selected="selected" style="display:none;">{{fund.source}}</option>
+                    </select>
                     </select>
                 </div>
             </div>
