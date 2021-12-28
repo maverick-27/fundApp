@@ -6,7 +6,7 @@ db = SQLAlchemy()
 class FundModel(db.Model):
     __tablename__ = "table"
 
-    fund_id = db.Column(db.Integer(), primary_key=True)
+    fund_id = db.Column(db.String(), primary_key=True)
     name = db.Column(db.String())
     source = db.Column(db.String())
     effective_date = db.Column(db.String(80))

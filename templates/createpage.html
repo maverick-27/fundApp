@@ -1,6 +1,6 @@
 <html>
 <head>
-
+         <title>Fund List</title>
     <link
             rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
@@ -35,6 +35,7 @@
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input
+                            required
                             type="text"
                             class="form-control"
                             name="name"
@@ -63,6 +64,7 @@
                 <div class="form-group">
                     <label for="effective_date">Effective Date</label>
                     <input
+                            required
                             type="date"
                             class="form-control"
                             name="effective_date"
@@ -84,12 +86,15 @@
                             name="future_effective_date"
                             id="future_effective_date"
                             placeholder=""
-                            onchange="handler(event);"
+                            onchange="newData(event);"
                     />
                 </div>
             </div>
         </div>
 
+          <button type="cancel" class="btn btn-primary" value="Cancel">
+            <a style="color:white" href="/">Cancel </a>
+        </button>
         <button type="submit" class="btn btn-primary" value="Submit">
             Submit
         </button>
@@ -97,7 +102,7 @@
 </div>
 
 <script>
-     function handler(e) {
+     function newData(e) {
       console.log("Print Event", e.target.value);
       if (e.target.value) {
         var mySelect = document.getElementById("source");

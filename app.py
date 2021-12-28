@@ -63,6 +63,7 @@ def update(id):
             db.session.add(fund)
             db.session.commit()
             return redirect(f'/')
+
         return f"Fund with id = {id} Does not exist"
 
     return render_template('edit.html', fund=fund)
