@@ -1,138 +1,103 @@
 <html>
+
 <head>
     <title>Fund List</title>
-    <link
-            rel="stylesheet"
-            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-    />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
 </head>
+
 <body>
 
-<div class="container">
-    <form action="" method="POST">
-        <h2>Edit Fund</h2>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="fund_id">Fund Id</label>
-                    <input
-                            disabled
-                            type="integer"
-                            class="form-control"
-                            name="fund_id"
-                            placeholder=""
-                            value="{{fund.fund_id}}"
-                            id="fund_id"
-                    />
+    <div class="container">
+        <form action="" method="POST">
+            <h2>Edit Fund</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="fund_id">Fund Id</label>
+                        <input disabled type="integer" class="form-control" name="fund_id" placeholder=""
+                            value="{{fund.fund_id}}" id="fund_id" />
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input
-                            type="text"
-                            class="form-control"
-                            name="name"
-                            placeholder=""
-                            value="{{fund.name}}"
-                            id="name"
-                    />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" name="name" placeholder="" value="{{fund.name}}"
+                            id="name" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="source">Source</label>
+                        <select class="form-control" name="source" id="source" onchange="">
+                            <option disabled="disabled" selected="selected" style="display:none;">{{fund.source}}
+                            </option>
+                            <option value="IBOR">IBOR</option>
+                            <option value="LEGACY">LEGACY</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="effective_date">Effective Date</label>
+                        <input onchange="handler(event)" type="date" class="form-control" name="effective_date"
+                            id="effective_date" value="{{fund.effective_date}}" placeholder="" />
+                    </div>
                 </div>
             </div>
 
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="source">Source</label>
-                    <select class="form-control" name="source" id="source" onchange="">
-                        <option disabled="disabled" selected="selected" style="display:none;">{{fund.source}}</option>
-                        <option value="IBOR">IBOR</option>
-                        <option value="LEGACY">LEGACY</option>
-                    </select>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="fund_type">Fund Type</label>
+                        <input type="text" class="form-control" name="fund_type" placeholder="" value="{{fund.fund_type}}"
+                            id="fund_type" />
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="effective_date">Effective Date</label>
-                    <input
-                            type="date"
-                            class="form-control"
-                            name="effective_date"
-                            id="effective_date"
-                            value="{{fund.effective_date}}"
-                            placeholder=""
-                    />
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="future_effective_date">Future Effective Date</label>
-                    <input
-                            onchange="handler(event)"
-                            type="date"
-                            class="form-control"
-                            name="future_effective_date"
-                            id="future_effective_date"
-                            value="{{fund.future_effective_date}}"
-                            placeholder=""
-                            onload="checkDate(event)"
-                    />
-                </div>
-            </div>
-        </div>
 
 
-        <button type="cancel" class="btn btn-primary" value="Cancel">
-            <a style="color:white" href="/">Cancel </a>
-        </button>
-        <button type="submit" class="btn btn-primary" value="Submit">
-            Submit
-        </button>
+            <button type="cancel" class="btn btn-primary" value="Cancel">
+                <a style="color:white" href="/">Cancel </a>
+            </button>
+            <button type="submit" class="btn btn-primary" value="Submit">
+                Submit
+            </button>
 
-    </form>
-</div>
+        </form>
+    </div>
 </body>
 <script>
-    function checkData(){
+
+    function handler(e) {
+        console.log("Print Event", e.target.value);
         if (e.target.value) {
-        var mySelect = document.getElementById("source");
-        var len = mySelect.length;
-        for (var i = 0; i < len; i++) {
-          mySelect.remove(0);
+            var varDate = new Date(e.target.value);
+            var today = new Date();
+            if (varDate > today) {
+                var mySelect = document.getElementById("source");
+                var len = mySelect.length;
+                for (var i = 0; i < len; i++) {
+                    mySelect.remove(0);
+                }
+                document.getElementById("source").options[0] = new Option(
+                    "IBOR",
+                    "IBOR"
+                );
+                document.getElementById("source").options[1] = new Option(
+                    "LEGACY",
+                    "LEGACY"
+                );
+            }
         }
-        document.getElementById("source").options[0] = new Option(
-          "IBOR",
-          "IBOR"
-        );
-       }
-     }
-
-     function handler(e) {
-      console.log("Print Event", e.target.value);
-      if (e.target.value) {
-        var mySelect = document.getElementById("source");
-        var len = mySelect.length;
-        for (var i = 0; i < len; i++) {
-          mySelect.remove(0);
-        }
-        document.getElementById("source").options[0] = new Option(
-          "IBOR",
-          "IBOR"
-        );
-          document.getElementById("source").options[1] = new Option(
-          "LEGACY" ,
-          "LEGACY"
-        );
     }
-}
-
 
 </script>
 
