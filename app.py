@@ -44,6 +44,11 @@ def resource_not_found(e):
     return render_template('duplicateError.html')
 
 
+@app.errorhandler(400)
+def resource_not_found(e):
+    return render_template('duplicateError.html')
+
+
 @app.route('/<int:id>')
 def RetrieveFunds(id):
     fund = FundModel.query.filter_by(fund_id=id).first()
@@ -62,6 +67,8 @@ def update(id):
             fund_id = request.form.get('fund_id')
             name = request.form.get('name')
             source = request.form.get('source')
+            if source is None:
+                source = fund.source
             effective_date = request.form.get('effective_date')
             fund_type = request.form.get('fund_type')
             fund = FundModel(fund_id=fund_id, name=name, source=source, effective_date=effective_date,
