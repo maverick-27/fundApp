@@ -6,7 +6,7 @@ from models import db, FundModel
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db.init_app(app)
 
 
@@ -39,6 +39,11 @@ def RetrieveList():
     return render_template('datalist.html', funds=funds)
 
 
+@app.errorhandler(500)
+def resource_not_found(e):
+    return render_template('duplicateError.html')
+
+
 @app.route('/<int:id>')
 def RetrieveFunds(id):
     fund = FundModel.query.filter_by(fund_id=id).first()
@@ -54,12 +59,14 @@ def update(id):
         if fund:
             db.session.delete(fund)
             db.session.commit()
-            name = request.form['name']
+            fund_id = request.form.get('fund_id')
+            name = request.form.get('name')
             source = request.form['source']
-            effective_date = request.form['effective_date']
-            future_effective_date = request.form['future_effective_date']
-            fund = FundModel(fund_id=id, name=name, source=source, effective_date=effective_date,
+            effective_date = request.form.get('effective_date')
+            future_effective_date = request.form.get('future_effective_date')
+            fund = FundModel(fund_id=fund_id, name=name, source=source, effective_date=effective_date,
                              future_effective_date=future_effective_date)
+            print(fund)
             db.session.add(fund)
             db.session.commit()
             return redirect(f'/')

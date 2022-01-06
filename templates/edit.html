@@ -1,6 +1,6 @@
 <html>
 <head>
-        <title>Fund List</title>
+    <title>Fund List</title>
     <link
             rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
@@ -16,11 +16,11 @@
                 <div class="form-group">
                     <label for="fund_id">Fund Id</label>
                     <input
+                            disabled
                             type="integer"
                             class="form-control"
                             name="fund_id"
                             placeholder=""
-
                             value="{{fund.fund_id}}"
                             id="fund_id"
                     />
@@ -60,7 +60,6 @@
                 <div class="form-group">
                     <label for="effective_date">Effective Date</label>
                     <input
-
                             type="date"
                             class="form-control"
                             name="effective_date"
@@ -90,7 +89,7 @@
         </div>
 
 
-         <button type="cancel" class="btn btn-primary" value="Cancel">
+        <button type="cancel" class="btn btn-primary" value="Cancel">
             <a style="color:white" href="/">Cancel </a>
         </button>
         <button type="submit" class="btn btn-primary" value="Submit">
@@ -127,8 +126,13 @@
           "IBOR",
           "IBOR"
         );
+          document.getElementById("source").options[1] = new Option(
+          "LEGACY" ,
+          "LEGACY"
+        );
     }
 }
+
 
 </script>
 
