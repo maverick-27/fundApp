@@ -110,7 +110,7 @@
         if (e.target.value) {
             var varDate = new Date(e.target.value);
             var today = new Date();
-            if (varDate > today) {
+            if (varDate < today) {
                 var mySelect = document.getElementById("source");
                 var len = mySelect.length;
                 for (var i = 0; i < len; i++) {
