@@ -1,18 +1,19 @@
-from os import abort
-
-from flask import Flask, render_template, request, redirect
-from models import db, FundModel
+from datetime import datetime
+from flask import Flask, render_template, request, jsonify
+from flask_mysqldb import MySQL
+from multiprocessing import Value
+from flask import flash
+# import re
+from werkzeug.utils import redirect
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-db.init_app(app)
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'root'
+app.config['MYSQL_DB'] = 'fundsapp'
 
-
-@app.before_first_request
-def create_table():
-    db.create_all()
+mysql = MySQL(app)
 
 
 @app.route('/create', methods=['GET', 'POST'])
@@ -21,71 +22,107 @@ def create():
         return render_template('createpage.html')
 
     if request.method == 'POST':
-        fund_id = request.form['fund_id']
-        name = request.form['name']
-        source = request.form['source']
-        effective_date = request.form['effective_date']
+        version = '1'
+        fund_short_name = request.form['fund_short_name']
+        supplier = request.form['supplier']
         fund_type = request.form['fund_type']
-        fund = FundModel(fund_id=fund_id, name=name, source=source, effective_date=effective_date,
-                         fund_type=fund_type)
-        db.session.add(fund)
-        db.session.commit()
+        created_date = datetime.now()
+        updated_date = datetime.now()
+        created_by = request.form["created_by"]
+        updated_by = request.form["updated_by"]
+        active_indicator = 'Y'
+        print("Second")
+        cursor = mysql.connection.cursor()
+        data = (
+            version, fund_short_name, supplier, fund_type, created_date, updated_date, created_by, updated_by,
+            active_indicator)
+        print(data)
+        cursor.execute("INSERT INTO fundsapp VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)", data)
+        mysql.connection.commit()
+        cursor.close()
+        msg = 'You have Added fund successfully'
         return redirect('/')
 
 
 @app.route('/')
 def RetrieveList():
-    funds = FundModel.query.all()
-    return render_template('datalist.html', funds=funds)
+    cursor = mysql.connection.cursor()
+    active_indicator = 'Y'
+    cursor.execute("select fund_short_name, supplier, fund_type, max(version) from fundsapp where "
+                   "active_indicator =%s group by fund_short_name", (active_indicator,))
+    funds = cursor.fetchall()
+    return render_template("datalist.html", funds=funds)
 
 
-@app.errorhandler(500)
-def resource_not_found(e):
-    return render_template('duplicateError.html')
+# @app.errorhandler(500)
+# def resource_not_found(e):
+#     return render_template('duplicateError.html')
 
 
-@app.route('/<int:id>')
-def RetrieveFunds(id):
-    fund = FundModel.query.filter_by(fund_id=id).first()
-    if fund:
-        return render_template('data.html', fund=fund)
-    return f"Fund with id = {id} Does not exist"
+# @app.route('/<int:id>', methods=['GET', 'POST'])
+# def RetrieveFunds(id):
+#     conn = mysql.connect()
+#     cursor = mysql.connection.cursors.DictCursor
+#     cursor.execute("SELECT * FROM fundsapp WHERE fund_id=%s", (id,))
+#     fund = cursor.fetchone()
 
 
-@app.route('/<int:id>/edit', methods=['GET', 'POST'])
+# return render_template("data.html", fund=fund)
+
+
+@app.route('/<id>/edit', methods=['GET', 'POST'])
 def update(id):
-    fund = FundModel.query.filter_by(fund_id=id).first()
+    data = 0
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT * FROM fundsapp WHERE fund_short_name=%s", (id,))
+    fund = cursor.fetchone()
+    print(fund)
     if request.method == 'POST':
         if fund:
-            db.session.delete(fund)
-            db.session.commit()
-            fund_id = request.form.get('fund_id')
-            name = request.form.get('name')
-            source = request.form.get('source')
-            effective_date = request.form.get('effective_date')
+            data = fund[0]
+            data += 1
+            version = data
+            print(version)
+            fund_short_name = request.form.get('fund_short_name')
+            supplier = request.form.get('supplier')
+            if supplier is None:
+                supplier = fund[2]
             fund_type = request.form.get('fund_type')
-            fund = FundModel(fund_id=fund_id, name=name, source=source, effective_date=effective_date,
-                             fund_type=fund_type)
-            print(fund)
-            db.session.add(fund)
-            db.session.commit()
-            return redirect(f'/')
+            created_date = fund[4]
+            created_by = fund[6]
+            updated_date = datetime.now()
+            updated_by = fund[7]
+            active_indicator = "Y"
+            print("data")
+            cursor = mysql.connection.cursor()
+            data = (
+                version, fund_short_name, supplier, fund_type, created_date, updated_date, created_by,
+                updated_by,
+                active_indicator)
+            print(data)
+            cursor.execute("INSERT INTO fundsapp VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)", data)
+            mysql.connection.commit()
+            cursor.close()
+            msg = 'You have Edit fund successfully'
+            return redirect('/')
+    return render_template("edit.html", fund=fund)
 
-        return f"Fund with id = {id} Does not exist"
 
-    return render_template('edit.html', fund=fund)
-
-
-@app.route('/<int:id>/delete', methods=['GET', 'POST'])
+@app.route('/<id>/delete', methods=['GET', "POST"])
 def delete(id):
-    fund = FundModel.query.filter_by(fund_id=id).first()
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT * FROM fundsapp WHERE fund_short_name=%s", (id,))
+    fund = cursor.fetchone()
     if request.method == 'POST':
         if fund:
-            db.session.delete(fund)
-            db.session.commit()
+            print("Delete")
+            print(fund)
+            sql = "Update fundsapp set active_indicator='N' where fund_short_name=%s"
+            data = id
+            cursor.execute(sql, (id,))
+            mysql.connection.commit()
+            cursor.close()
             return redirect('/')
-        abort(404)
-
     return render_template('delete.html')
 
 

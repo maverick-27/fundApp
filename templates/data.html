@@ -1,6 +1,6 @@
 <html>
 <head>
-        <title>Fund List</title>
+    <title>Fund List</title>
     <link
             rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
@@ -23,8 +23,7 @@
                             class="form-control"
                             name="fund_id"
                             placeholder=""
-                            readonly
-                            value="{{fund.fund_id}}"
+                            value="{{fund[1]}}"
                             id="fund_id"
                     />
                 </div>
@@ -35,14 +34,13 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="name">Name</label>
+                    <label for="name">Fund Short Name</label>
                     <input
                             type="text"
                             class="form-control"
                             name="name"
                             placeholder=""
-                            readonly
-                            value="{{fund.name}}"
+                            value="{{fund[2]}}"
                             id="name"
                     />
                 </div>
@@ -53,35 +51,16 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="source">Source</label>
-                    <select class="form-control" disabled name="source" id="source">
-                        <option selected="selected" style="display:none;">{{fund.source}}</option>
+                    <label for="source">Supplier</label>
+                    <select class="form-control" name="supplier" id="source">
+                        <option selected="selected" style="display:none;">{{fund[3]}}</option>
                     </select>
                     </select>
                 </div>
             </div>
         </div>
-
 
         <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="effective_date">Effective Date</label>
-                    <input
-                            type="date"
-                            readonly
-                            class="form-control"
-                            name="effective_date"
-                            id="effective_date"
-                            value="{{fund.effective_date}}"
-                            placeholder=""
-                    />
-                </div>
-            </div>
-        </div>
-
-
-         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="fund_type">Fund Type</label>
@@ -89,7 +68,39 @@
                             class="form-control"
                             name="fund_type"
                             id="fund_type"
-                            value="{{fund.fund_type}}"
+                            value="{{fund[4]}}"
+                            placeholder=""
+                    />
+                </div>
+            </div>
+        </div>
+
+
+          <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="fund_type">Created By</label>
+                    <input
+                            class="form-control"
+                            name="fund_type"
+                            id="created_by"
+                            value="{{fund[4]}}"
+                            placeholder=""
+                    />
+                </div>
+            </div>
+        </div>
+
+
+          <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="fund_type">Updated By</label>
+                    <input
+                            class="form-control"
+                            name="fund_type"
+                            id="updated_by"
+                            value="{{fund[4]}}"
                             placeholder=""
                     />
                 </div>

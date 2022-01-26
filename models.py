@@ -20,4 +20,4 @@ class FundModel(db.Model):
         self.fund_type = fund_type
 
     def __repr__(self):
-        return f"{self.name}:{self.fund_id}"
+        return f"{self.name}:{self.name}"

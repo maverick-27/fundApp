@@ -42,10 +42,8 @@
         <table class="table">
             <thead>
             <tr>
-                <th class="task-id">Fund Id</th>
-                <th class="task">Name</th>
-                <th class="status">Source</th>
-                <th class="update">Effective Date</th>
+                <th class="task">Fund Short Name</th>
+                <th class="status">Supplier</th>
                 <th class="update">Fund Type</th>
             </tr>
             </thead>
@@ -53,15 +51,13 @@
             <tbody>
             {% for fund in funds %}
             <tr>
-                <td>{{fund.fund_id}}</td>
-                <td>{{fund.name}}</td>
-                <td>{{fund.source}}</td>
-                <td>{{fund.effective_date}}</td>
-                <td>{{fund.fund_type}}</td>
+                <td>{{fund[0]}}</td>
+                <td>{{fund[1]}}</td>
+                <td>{{fund[2]}}</td>
 
                 <td>
                     <button type="button" class="btn btn-outline-info btn-sm">
-                        <a href="{{fund.fund_id}}/edit"
+                        <a href="{{fund[0]}}/edit"
                         ><i class="fa fa-pen fa-1" aria-hidden="true"></i
                         ></a>
                     </button>
@@ -69,7 +65,7 @@
 
                 <td>
                     <button class="btn btn-outline-secondary btn-sm remove">
-                        <a href="{{fund.fund_id}}/delete">
+                        <a href="{{fund[0]}}/delete">
                             <i class="fa fa-trash fa-1" aria-hidden="true"></i>
                         </a>
                     </button>
