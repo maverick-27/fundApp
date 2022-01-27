@@ -1,9 +1,9 @@
 # fundApp
 
 # To Run  
-   ###We need pip
+   ### We need pip
    
-#Steps to run this app :
+# Steps to run this app :
    
    ## pip install flask
    ## pip install flask_mysqldb
