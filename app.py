@@ -22,6 +22,14 @@ def create():
         return render_template('createpage.html')
 
     if request.method == 'POST':
+        fund_short_name = request.form['fund_short_name']
+        cursor = mysql.connection.cursor()
+        cursor.execute("SELECT * FROM fundsapp WHERE fund_short_name=%s", (fund_short_name,))
+        fund = cursor.fetchone()
+        if fund:
+            mysql.connection.commit()
+            cursor.close()
+            return render_template("duplicateError.html")
         version = '1'
         fund_short_name = request.form['fund_short_name']
         supplier = request.form['supplier']
@@ -32,7 +40,7 @@ def create():
         updated_by = request.form["updated_by"]
         active_indicator = 'Y'
         print("Second")
-        cursor = mysql.connection.cursor()
+
         data = (
             version, fund_short_name, supplier, fund_type, created_date, updated_date, created_by, updated_by,
             active_indicator)
@@ -58,9 +66,9 @@ def RetrieveList():
     return render_template("datalist.html", funds=funds)
 
 
-# @app.errorhandler(500)
-# def resource_not_found(e):
-#     return render_template('duplicateError.html')
+@app.errorhandler(500)
+def resource_not_found(e):
+    return render_template('duplicateError.html')
 
 
 # @app.route('/<int:id>', methods=['GET', 'POST'])
