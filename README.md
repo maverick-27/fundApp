@@ -1,15 +1,11 @@
 # fundApp
 
 # To Run  
-  We need pip
+   ###We need pip
    
-   Once installed run these two commands
+#Steps to run this app :
    
-   # pip install flask, flask_sqlalchemy
-   # flask run
+   ## pip install flask
+   ## pip install flask_mysqldb
+   ## flask run -h localhost -p 3000
 
-# this app is now integrated with MYSQL as DB
-
-
-# To run this app on any other port run command :
-  ## flask run -h localhost -p 3000
