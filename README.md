@@ -10,7 +10,8 @@
   
   ## create database fundsapp;
   ## use database fundsapp;
-  ## create table fundsapp (
+     
+      create table fundsapp (
       version varchar(100),
       fund_short_name varchar(100),
       supplier varchar(100),
