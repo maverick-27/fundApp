@@ -1,8 +1,3 @@
-# fundApp
-
-# To Run  
-   ### We need pip
-   
 # Steps to run this app :
    
    ## pip install flask
