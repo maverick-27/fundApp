@@ -7,3 +7,7 @@
    
    # pip install flask, flask_sqlalchemy
    # flask run
+
+
+# To run this aap on any other port run command 
+  ## flask run -h localhost -p 3000
