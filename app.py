@@ -48,8 +48,12 @@ def create():
 def RetrieveList():
     cursor = mysql.connection.cursor()
     active_indicator = 'Y'
-    cursor.execute("select fund_short_name, supplier, fund_type, max(version) from fundsapp where "
-                   "active_indicator =%s group by fund_short_name", (active_indicator,))
+
+    cursor.execute("select a.fund_short_name, a.supplier, a.fund_type, a.version  from fundsapp a Inner Join(select "
+                   "fund_short_name, max(fund_type), max(supplier), max(version) version from fundsapp group by "
+                   "fund_short_name) b ON a.fund_short_name = b.fund_short_name and a.version = b.version where "
+                   "active_indicator =%s", (active_indicator))
+
     funds = cursor.fetchall()
     return render_template("datalist.html", funds=funds)
 
@@ -74,15 +78,21 @@ def RetrieveList():
 def update(id):
     data = 0
     cursor = mysql.connection.cursor()
-    cursor.execute("SELECT * FROM fundsapp WHERE fund_short_name=%s", (id,))
+    cursor.execute(
+        "SELECT  max(version) ,max(fund_short_name) , max(supplier) , max(fund_type) ,created_date, updated_date , "
+        "created_by, updated_by ,active_indicator FROM fundsapp WHERE "
+        "fund_short_name=%s", (id,))
+
     fund = cursor.fetchone()
     print(fund)
     if request.method == 'POST':
         if fund:
-            data = fund[0]
+            data = int(fund[0])
+            print(fund)
+            print(type(data))
             data += 1
-            version = data
-            print(version)
+            print(data)
+            print(type(data))
             fund_short_name = request.form.get('fund_short_name')
             supplier = request.form.get('supplier')
             if supplier is None:
@@ -93,13 +103,11 @@ def update(id):
             updated_date = datetime.now()
             updated_by = fund[7]
             active_indicator = "Y"
-            print("data")
             cursor = mysql.connection.cursor()
             data = (
-                version, fund_short_name, supplier, fund_type, created_date, updated_date, created_by,
+                str(data), fund_short_name, supplier, fund_type, created_date, updated_date, created_by,
                 updated_by,
                 active_indicator)
-            print(data)
             cursor.execute("INSERT INTO fundsapp VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)", data)
             mysql.connection.commit()
             cursor.close()
